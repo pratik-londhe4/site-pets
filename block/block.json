@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "site-pets/playground",
+	"title": "Pet Playground",
+	"category": "widgets",
+	"description": "A little scene with pixel pets playing in it. Visitors can pet them and throw them a ball.",
+	"keywords": [ "pet", "cat", "dog", "fun", "animation" ],
+	"textdomain": "site-pets",
+	"attributes": {
+		"pets": {
+			"type": "array",
+			"default": [ { "type": "cat-orange", "name": "" }, { "type": "dog", "name": "" } ],
+			"items": { "type": "object" }
+		},
+		"scene": { "type": "string", "default": "garden" },
+		"height": { "type": "number", "default": 260 },
+		"ball": { "type": "boolean", "default": true }
+	},
+	"supports": {
+		"align": [ "wide", "full" ],
+		"anchor": true,
+		"html": false,
+		"spacing": { "margin": true }
+	},
+	"editorScript": "site-pets-playground-editor",
+	"viewScript": "site-pets",
+	"style": "site-pets"
+}

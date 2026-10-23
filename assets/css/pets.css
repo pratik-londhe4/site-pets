@@ -1,0 +1,183 @@
+/* Site Pets: the pets layer, its buttons and the Pet Playground block. */
+
+.spets-layer {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+/* On a page the pets float above everything but the admin bar and never take clicks, except on a pet. */
+.spets-layer--page {
+	position: fixed;
+	z-index: 99990;
+}
+
+.spets-layer[hidden] {
+	display: none;
+}
+
+.spets-pet {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-repeat: no-repeat;
+	image-rendering: pixelated;
+	pointer-events: auto;
+	cursor: pointer;
+	will-change: transform;
+}
+
+.spets-heart {
+	position: absolute;
+	color: #e2445c;
+	font: 700 20px/1 sans-serif;
+	text-shadow: 0 1px 0 #fff;
+	transform: translateX(-50%);
+	animation: spets-float 1.2s ease-out forwards;
+}
+
+@keyframes spets-float {
+	from {
+		opacity: 1;
+		margin-top: 0;
+	}
+
+	to {
+		opacity: 0;
+		margin-top: -36px;
+	}
+}
+
+.spets-ball {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 14px;
+	height: 14px;
+	border: 1px solid #5d7a10;
+	border-radius: 50%;
+	background: radial-gradient(circle at 35% 35%, #f4ff8a, #c8e020 60%, #9db512);
+}
+
+.spets-controls {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	z-index: 2;
+	display: flex;
+	gap: 6px;
+}
+
+.spets-controls--page {
+	position: fixed;
+	top: auto;
+	right: auto;
+	bottom: 12px;
+	left: 12px;
+	z-index: 99991;
+}
+
+.spets-layer--admin ~ .spets-controls--page,
+.wp-admin .spets-controls--page {
+	right: 12px;
+	left: auto;
+}
+
+.spets-button {
+	padding: 4px 10px;
+	border: 1px solid #1e1e1e;
+	border-radius: 999px;
+	background: #fff;
+	color: #1e1e1e;
+	font: 500 12px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	cursor: pointer;
+}
+
+.spets-button:hover {
+	background: #f0f0f0;
+}
+
+.spets-button:focus-visible {
+	outline: 2px solid #3858e9;
+	outline-offset: 2px;
+}
+
+.spets-button[hidden] {
+	display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.spets-heart {
+		animation-duration: 0.01s;
+	}
+}
+
+/* Pet Playground block. */
+
+.spets-playground {
+	position: relative;
+	overflow: hidden;
+	height: 260px;
+	border-radius: 8px;
+	--spets-floor: 28px;
+}
+
+.spets-playground--garden {
+	background:
+		linear-gradient(to top, #6dbb45 0, #6dbb45 var(--spets-floor), #5aa83a var(--spets-floor), #5aa83a calc(var(--spets-floor) + 4px), transparent calc(var(--spets-floor) + 4px)),
+		linear-gradient(#a9dcff, #e2f4ff);
+}
+
+.spets-playground--beach {
+	background:
+		linear-gradient(to top, #f1d79a 0, #f1d79a var(--spets-floor), transparent var(--spets-floor)),
+		linear-gradient(to top, transparent calc(var(--spets-floor) + 0px), #4fb3d9 var(--spets-floor), #4fb3d9 calc(var(--spets-floor) + 46px), transparent calc(var(--spets-floor) + 46px)),
+		linear-gradient(#ffd9a8, #ffefd9);
+}
+
+.spets-playground--night {
+	background:
+		radial-gradient(circle at 82% 22%, #fff7d6 0 16px, transparent 17px),
+		radial-gradient(1px 1px at 20% 30%, #fff 50%, transparent 51%),
+		radial-gradient(1px 1px at 45% 18%, #fff 50%, transparent 51%),
+		radial-gradient(1px 1px at 63% 40%, #fff 50%, transparent 51%),
+		radial-gradient(1px 1px at 12% 55%, #fff 50%, transparent 51%),
+		linear-gradient(to top, #2e4a3a 0, #2e4a3a var(--spets-floor), transparent var(--spets-floor)),
+		linear-gradient(#141b3a, #2a3567);
+}
+
+/* Something to jump on. */
+.spets-ledge {
+	position: absolute;
+	bottom: var(--spets-floor);
+	left: 58%;
+	width: 128px;
+	height: 30px;
+	border: 2px solid #4a3020;
+	border-radius: 14px 14px 4px 4px;
+	background: #8a5a3a;
+}
+
+.spets-playground--beach .spets-ledge {
+	border-color: #6b6b6b;
+	border-radius: 40px 40px 6px 6px;
+	background: #a7a7a7;
+}
+
+.spets-playground--night .spets-ledge {
+	border-color: #1a2a20;
+	background: #3b5a45;
+}
+
+/* Block sidebar: a little space between pets. */
+.spets-editor-pet {
+	margin-bottom: 16px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.spets-editor-pet .components-base-control {
+	margin-bottom: 8px;
+}

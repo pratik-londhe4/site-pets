@@ -1,0 +1,45 @@
+{
+	"screens": [
+		{
+			"name": "Appearance > Site Pets",
+			"url": "/wp-admin/themes.php?page=site-pets",
+			"steps": [ { "waitFor": "#spets-preview .spets-pet" } ],
+			"include": [ ".spets-settings" ]
+		},
+		{
+			"name": "Profile: desk buddy fields",
+			"url": "/wp-admin/profile.php",
+			"include": [ "#site-pets-buddy", "#site-pets-buddy + p + table" ]
+		},
+		{
+			"name": "Front end: pets and their buttons",
+			"setup": [ { "wp": [ "post", "create", "--post_title=A11y", "--post_status=publish", "--post_content=<!-- wp:site-pets/playground /-->", "--porcelain" ], "save": "post" } ],
+			"url": "/?p={post}",
+			"loggedOut": true,
+			"steps": [ { "waitFor": ".spets-layer--page .spets-pet" } ],
+			"include": [ ".spets-controls", ".spets-playground", ".spets-layer" ],
+			"cleanup": [ [ "post", "delete", "{post}", "--force" ] ]
+		},
+		{
+			"name": "Front end: pets hidden",
+			"setup": [ { "wp": [ "post", "create", "--post_title=A11y hidden", "--post_status=publish", "--porcelain" ], "save": "post" } ],
+			"url": "/?p={post}",
+			"loggedOut": true,
+			"steps": [ { "click": "role=button[name=/Hide pets/]" }, { "waitFor": "role=button[name=/Show pets/]" } ],
+			"include": [ ".spets-controls" ],
+			"cleanup": [ [ "post", "delete", "{post}", "--force" ] ]
+		},
+		{
+			"name": "Editor: Pet Playground settings",
+			"setup": [ { "wp": [ "post", "create", "--post_title=A11y editor", "--post_status=draft", "--post_content=<!-- wp:site-pets/playground /-->", "--porcelain" ], "save": "post" } ],
+			"editor": "{post}",
+			"steps": [
+				{ "evaluate": "wp.data.dispatch( 'core/block-editor' ).selectBlock( wp.data.select( 'core/block-editor' ).getBlocks()[0].clientId )" },
+				{ "waitFor": "role=button[name=/Add a pet/]" }
+			],
+			"include": [ ".block-editor-block-inspector" ],
+			"cleanup": [ [ "post", "delete", "{post}", "--force" ] ]
+		}
+	],
+	"skip": {}
+}

@@ -1,0 +1,34 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"meta": {
+		"title": "Site Pets demo",
+		"author": "pratiklondhe"
+	},
+	"landingPage": "/?p=100",
+	"preferredVersions": {
+		"php": "8.3",
+		"wp": "latest"
+	},
+	"features": {
+		"networking": true
+	},
+	"login": true,
+	"steps": [
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "git:directory",
+				"url": "https://github.com/pratik-londhe4/site-pets",
+				"ref": "main"
+			},
+			"options": {
+				"activate": true,
+				"targetFolderName": "site-pets"
+			}
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once '/wordpress/wp-load.php'; PratikLondhe\\SitePets\\Settings::update( array( 'pets' => array( array( 'type' => 'cat-orange', 'name' => '' ), array( 'type' => 'dog', 'name' => '' ), array( 'type' => 'wapuu', 'name' => '' ) ) ) ); PratikLondhe\\SitePets\\Admin\\Buddy::set( 1, 'fox', 'Rusty' ); $p = function ( $t ) { return '<!-- wp:paragraph --><p>' . $t . '</p><!-- /wp:paragraph -->'; }; $h = function ( $t ) { return '<!-- wp:heading --><h2 class=\"wp-block-heading\">' . $t . '</h2><!-- /wp:heading -->'; }; wp_insert_post( array( 'import_id' => 100, 'post_title' => 'Meet the pets', 'post_status' => 'publish', 'post_author' => 1, 'post_content' => implode( \"\\n\\n\", array( $p( 'Mango, Biscuit and Wapuu live on this site. Click one to pet it, or throw them a ball with the button in the corner.' ), $h( 'They jump on headings' ), $p( 'Scroll a little and watch them hop onto this heading, then fall off when it scrolls away.' ), '<!-- wp:separator --><hr class=\"wp-block-separator has-alpha-channel-opacity\"/><!-- /wp:separator -->', $h( 'And play in a block' ), '<!-- wp:site-pets/playground {\"pets\":[{\"type\":\"fox\",\"name\":\"\"},{\"type\":\"duck\",\"name\":\"\"},{\"type\":\"cat-black\",\"name\":\"\"}],\"scene\":\"garden\"} /-->', $p( 'Your own desk buddy, Rusty the fox, is waiting in wp-admin.' ) ) ) ) );"
+		}
+	]
+}
